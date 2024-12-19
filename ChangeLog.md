@@ -18,3 +18,7 @@ Is provided for backward compatibility for mmsyn7ukr.
 
 * Third version. Added git repository and bug-tracker. Updated the dependencies.
 
+## 0.3.0.1 -- 2024-12-19
+
+* Third version revised A. Fixed email address of the maintainer in the cabal file.
+

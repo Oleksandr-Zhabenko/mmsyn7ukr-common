@@ -2,7 +2,7 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                mmsyn7ukr-common
-version:             0.3.0.0
+version:             0.3.0.1
 synopsis:            Some common for mmsyn7ukr and mmsyn7ukr-array functionality using SoX.
 description:         A program and a library that can be used as a simple basic interface to some SoX functionality.
 homepage:            https://hackage.haskell.org/package/mmsyn7ukr-common
@@ -10,7 +10,7 @@ bug-reports:         https://github.com/Oleksandr-Zhabenko/mmsyn7ukr-common/issu
 license:             MIT
 license-file:        LICENSE
 author:              OleksandrZhabenko
-maintainer:          olexandr.zhabenko@yahoo.com
+maintainer:          oleksandr.zhabenko@yahoo.com
 copyright:           (c) Oleksandr Zhabenko 2019-2022, 2024
 category:            Language, Sound
 build-type:          Simple

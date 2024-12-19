@@ -14,3 +14,7 @@ Is provided for backward compatibility for mmsyn7ukr.
 
 * Second version. Updated the dependencies to support the latest GHC-9.* series.
 
+## 0.3.0.0 -- 2024-12-19
+
+* Third version. Added git repository and bug-tracker. Updated the dependencies.
+

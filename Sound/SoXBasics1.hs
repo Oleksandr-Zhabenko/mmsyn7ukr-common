@@ -1,9 +1,9 @@
 -- |
 -- Module      :  Sound.SoXBasics1
--- Copyright   :  (c) OleksandrZhabenko 2020
+-- Copyright   :  (c) OleksandrZhabenko 2020, 2024
 -- License     :  MIT
 -- Stability   :  Experimental
--- Maintainer  :  olexandr543@yahoo.com
+-- Maintainer  :  oleksandr.zhabenko@yahoo.com
 --
 -- A program and a library that can be used as a simple basic interface to some SoX functionality.
 -- This module differs from the "Sound.SoXBasics" that the resulting files
@@ -45,7 +45,7 @@ import System.Directory
 import Data.Maybe (isJust, fromJust)
 import Numeric
 import System.Process
-import EndOfExe
+import EndOfExe2
 import System.Exit
 import qualified Sound.SoXBasics as SB (ULencode(..), SoundFileExts(..), soxOpG, soxOpG1,
   ulAccessParameters, ulResultParameters, doubleCleanCheck, presenseCheck, secondFileClean,
@@ -280,8 +280,8 @@ volS2 fileA fileB = if isJust (showE "sox")
     amplMax <- SB.selMAG (getULFromExt fileB) fileB (0, upp) True
     amplMin <- SB.selMAG (getULFromExt fileB) fileB (0, upp) False
     let ampl = read (fst . SB.maxAbs $ (amplMax, amplMin))::Float
-    (code, _, _) <- SB.soxOpG (getULFromExt fileA) [] fileA [] ("8." ++ tail fileA) ["vol", showFFloat Nothing ampl $ show 0, "amplitude"]
-    twoExceptions2Files code fileA ("8." ++ tail fileA) (NotCreatedWithEffect "vol") (InitialFileNotChanged fileA)
+    (code, _, _) <- SB.soxOpG (getULFromExt fileA) [] fileA [] ("8." ++ drop 1 fileA) ["vol", showFFloat Nothing ampl $ show 0, "amplitude"]
+    twoExceptions2Files code fileA ("8." ++ drop 1 fileA) (NotCreatedWithEffect "vol") (InitialFileNotChanged fileA)
   else catchEnd ExecutableNotProperlyInstalled
 
 -- | Function 'sincA' uses a \"sinc\" effect with @-a 50 -I 0.07k-11k@ band-pass filter for the audio file given. While being

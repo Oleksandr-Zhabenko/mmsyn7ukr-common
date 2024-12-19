@@ -1,9 +1,9 @@
 -- |
 -- Module      :  Parser.ReplaceP
--- Copyright   :  (c) OleksandrZhabenko 2020-2021
+-- Copyright   :  (c) OleksandrZhabenko 2020-2021, 2024
 -- License     :  MIT
 -- Stability   :  Experimental
--- Maintainer  :  olexandr543@yahoo.com
+-- Maintainer  :  oleksandr.zhabenko@yahoo.com
 --
 -- This module provides some basic parsing functions for some special used 'Show' representation.
 --

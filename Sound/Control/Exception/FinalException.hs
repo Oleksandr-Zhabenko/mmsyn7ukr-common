@@ -3,10 +3,10 @@
 
 -- |
 -- Module      :  Sound.Control.Exception.FinalException
--- Copyright   :  (c) OleksandrZhabenko 2020-2021
+-- Copyright   :  (c) OleksandrZhabenko 2020-2021, 2024
 -- License     :  MIT
 -- Stability   :  Experimental
--- Maintainer  :  olexandr543@yahoo.com
+-- Maintainer  :  oleksandr.zhabenko@yahoo.com
 --
 -- Exceptions for the other modules.
 --

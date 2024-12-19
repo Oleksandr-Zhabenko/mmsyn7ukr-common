@@ -1,12 +1,12 @@
-{-# LANGUAGE CPP #-}
+-- {-# LANGUAGE CPP #-}
 {-# OPTIONS_HADDOCK show-extensions #-}
 
 -- |
 -- Module      :  Sound.SoXBasics
--- Copyright   :  (c) OleksandrZhabenko 2019-2021
+-- Copyright   :  (c) OleksandrZhabenko 2019-2021, 2024
 -- License     :  MIT
 -- Stability   :  Experimental
--- Maintainer  :  olexandr543@yahoo.com
+-- Maintainer  :  olexandr.zhabenko@yahoo.com
 --
 -- A program and a library that can be used as a simple basic interface to some SoX functionality.
 --
@@ -55,33 +55,23 @@ import Numeric
 import Data.Char
 import System.Process
 import System.IO
-import EndOfExe
+import EndOfExe2
 import System.Exit
 import Control.Concurrent (threadDelay)
 import Control.Exception (onException)
 import System.Info (os)
 import Sound.Control.Exception.FinalException
-
-#ifdef __GLASGOW_HASKELL__
-#if __GLASGOW_HASKELL__>=710
-/* code that applies only to GHC 7.10.* and higher versions */
 import GHC.Base (mconcat)
-#endif
-#endif
-#ifdef __GLASGOW_HASKELL__
-#if __GLASGOW_HASKELL__==708
-/* code that applies only to GHC 7.8.* */
-mconcat = concat
-#endif
-#endif
 
 -- | Function 'maxAbs' allows to choose a maximum by absolute value if the values are written as 'String'. Bool 'True' corresponds to maximum value, 'False' - to minimum value
 maxAbs :: (String, String) -> (String, Bool)
 maxAbs (xs, ys) | null xs || null ys = ([], False)
-                | head xs == '-' && head ys == '-' = if compare xs ys /= LT then (xs, False) else (ys, False)
-                | head xs /= '-' && head ys /= '-' = if compare xs ys == GT then (xs, True) else (ys, True)
-                | head xs == '-' && head ys /= '-' = if compare (tail xs) ys /= LT then (xs, False) else (ys, True)
-                | otherwise = if compare xs (tail ys) == GT then (xs, True) else (ys, False)
+                | hx == "-" && hy == "-" = if compare xs ys /= LT then (xs, False) else (ys, False)
+                | hx /= "-" && hy /= "-" = if compare xs ys == GT then (xs, True) else (ys, True)
+                | hx == "-" && hy /= "-" = if compare (drop 1 xs) ys /= LT then (xs, False) else (ys, True)
+                | otherwise = if compare xs (drop 1 ys) == GT then (xs, True) else (ys, False)
+            where hx = take 1 xs
+                  hy = take 1 ys
 
 ulAccessParameters :: [String]
 ulAccessParameters = ["-r22050","-c1"]
@@ -148,7 +138,7 @@ getMaxAG :: ULencode -> FilePath -> (Int, Int) -> IO String
 getMaxAG ul file (lowerbound, upperbound) = if isJust (showE "sox")
   then do
     (_, _, herr) <- soxOpG1 ul [] file [] ["trim", show lowerbound ++ "s", "=" ++ show upperbound ++ "s", "stat"]
-    let zs = lines herr in return (let u = (words $ zs !! 3) !! 2 in if head u == '-' then take 9 u else take 8 u)
+    let zs = lines herr in return (let u = (words $ zs !! 3) !! 2 in if take 1 u == "-" then take 9 u else take 8 u)
   else do
     catchEnd ExecutableNotProperlyInstalled
     return []
@@ -158,7 +148,7 @@ getMinAG :: ULencode -> FilePath -> (Int, Int) -> IO String
 getMinAG ul file (lowerbound, upperbound) = if isJust (showE "sox")
   then do
     (_, _, herr1) <- soxOpG1 ul [] file [] ["trim", show lowerbound ++ "s", "=" ++ show upperbound ++ "s", "stat"]
-    let zs = lines herr1 in return (let u = (words $ zs !! 4) !! 2 in if head u == '-' then take 9 u else take 8 u)
+    let zs = lines herr1 in return (let u = (words $ zs !! 4) !! 2 in if take 1 u == "-" then take 9 u else take 8 u)
   else do
     catchEnd ExecutableNotProperlyInstalled
     return []
@@ -508,7 +498,7 @@ volS2G ul fileA fileB = if isJust (showE "sox")
     (code, _, _) <- soxOpG ul [] file10 [] file20 ["vol", showFFloat Nothing ampl $ show 0, "amplitude"]
     twoExceptions1File code file20 (NotCreatedWithEffect "vol") (InitialFileNotChanged fileA)
   else catchEnd ExecutableNotProperlyInstalled
-      where (file10, file20) = applyExts2 ul fileA ("8." ++ tail fileA)
+      where (file10, file20) = applyExts2 ul fileA ("8." ++ drop 1 fileA)
 
 -- | Function 'sincAG' uses a \"sinc\" effect with @-a 50 -I 0.07k-11k@ band-pass filter for the audio file given.
 sincAG :: ULencode -> FilePath -> IO ()

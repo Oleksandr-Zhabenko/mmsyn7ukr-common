@@ -46,6 +46,8 @@ module Sound.SoXBasics (
   , noiseProfB, noiseProfE, noiseReduceB, noiseReduceE, noiseReduceBU, noiseReduceEU
   , sincA
   , volS, volS2
+  -- * Playback
+  , playA
 ) where
 
 import System.Directory
@@ -528,6 +530,20 @@ sampleAnG ul file pos = if isJust (showE "sox") && isJust (showE "soxi")
   else catchEnd ExecutableNotProperlyInstalled >> return ("","")
 
 ---------------------------------------------------------------
+
+-- | Function 'playA' plays the given file with SoX. For Windows it uses \"-t waveaudio -d\" options for SoX.
+playA :: FilePath -> IO ()
+playA file 
+   | take 5 os == "mingw" = 
+      if isJust (showE "sox") 
+          then readProcessWithExitCode (fromJust (showE "sox")) [file, "-t", "waveaudio", "-d"] "" >> return ()
+          else catchEnd ExecutableNotProperlyInstalled
+   | otherwise = 
+      if isJust (showE "play") 
+          then readProcessWithExitCode (fromJust (showE "play")) [file] "" >> return ()
+          else catchEnd ExecutableNotProperlyInstalled
+
+--------------------------------------------------------------
 
 getMaxA = getMaxAG W
 

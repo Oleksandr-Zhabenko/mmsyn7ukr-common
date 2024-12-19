@@ -22,3 +22,7 @@ Is provided for backward compatibility for mmsyn7ukr.
 
 * Third version revised A. Fixed email address of the maintainer in the cabal file.
 
+## 0.3.1.0 -- 2024-12-19
+
+* Third version revised B. Added playA to Sound.SoXBasics module from the mmsyn7ukr-array package.
+

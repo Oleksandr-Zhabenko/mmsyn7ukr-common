@@ -6,6 +6,7 @@ version:             0.3.0.0
 synopsis:            Some common for mmsyn7ukr and mmsyn7ukr-array functionality using SoX.
 description:         A program and a library that can be used as a simple basic interface to some SoX functionality.
 homepage:            https://hackage.haskell.org/package/mmsyn7ukr-common
+bug-reports:         https://github.com/Oleksandr-Zhabenko/mmsyn7ukr-common/issues
 license:             MIT
 license-file:        LICENSE
 author:              OleksandrZhabenko
